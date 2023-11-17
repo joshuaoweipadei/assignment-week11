@@ -52,6 +52,16 @@ func torontoWeather() WeatherObj {
 	return WeatherObj{Description: weatherData.Weather[0].Description, Temp: int(weatherData.Main.Temp - 273.15)} // Convert Kelvin to Celsius
 }
 
+func torontoTimeHandler(w http.ResponseWriter, r *http.Request) {
+	torontoWeatherObj := torontoWeather()
+
+	// fmt.Fprintf(w, "Toronto time is", torontoWeatherObj.Description, torontoWeatherObj.Temp)
+	resp := map[string]interface{}{"Temperature": torontoWeatherObj.Temp, "Description": torontoWeatherObj.Description}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(resp)
+}
+
 func main() {
 	fmt.Println("Server is listening on port 5000")
 	log.Fatal(http.ListenAndServe(":5000", nil))
