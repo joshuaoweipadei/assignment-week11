@@ -63,6 +63,7 @@ func torontoTimeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http.HandleFunc("/api/toronto-weather", torontoTimeHandler)
 	fmt.Println("Server is listening on port 5000")
 	log.Fatal(http.ListenAndServe(":5000", nil))
 }
